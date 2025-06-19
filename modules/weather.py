@@ -220,9 +220,9 @@ def get_weather_and_reply_format():
     try:
         weather_result = get_weather()
         if "❌" in weather_result:
-            return "날씨 정보를 가져올 수 없다. 그래도 러닝하러 가자! 🏃‍♂️"
+            return "날씨 정보를 가져올 수 없다."
         else:
-            return f"{weather_result}\n러닝하러 가자! 🏃‍♂️"
+            return f"{weather_result}\n"
     except Exception as e:
         return f"날씨 API 호출 중 오류가 발생했다. 그래도 러닝하러 가자! 🏃‍♂️\n에러: {str(e)}"
 

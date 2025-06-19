@@ -134,13 +134,13 @@ class POSTECHMealService:
         """메뉴 텍스트 포맷팅"""
         # 헤더 생성
         if meal_type == "전체":
-            menu_text = f"📍 포항공대 오늘({today_name}) 학식:\n\n"
+            menu_text = f"📍 포항공대 오늘({today_name}) 학식:"
         elif meal_type == "점심":
-            menu_text = f"🍱 포항공대 오늘({today_name}) 점심:\n\n"
+            menu_text = f"🍱 포항공대 오늘({today_name}) 점심:"
         elif meal_type == "저녁":
-            menu_text = f"🍽️ 포항공대 오늘({today_name}) 저녁:\n\n"
+            menu_text = f"🍽️ 포항공대 오늘({today_name}) 저녁:"
         else:
-            menu_text = f"📍 포항공대 오늘({today_name}) {meal_type}:\n\n"
+            menu_text = f"📍 포항공대 오늘({today_name}) {meal_type}:"
 
         if not filtered_menus:
             menu_text += "오늘 메뉴를 찾을 수 없다.\n"
