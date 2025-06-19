@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from urllib.parse import quote
 import ssl
 import urllib3
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
