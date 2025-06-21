@@ -70,10 +70,28 @@ class MessageHandler:
     def _handle_basic_messages(self, msg):
         """기본 메시지 처리 (하드코딩된 응답들)"""
 
+        # 🔥 날씨 관련 처리 - 지역별 지원
         weather_keywords = ["날씨", "기온", "온도", "바람", "습도"]
         if any(keyword in msg for keyword in weather_keywords):
             from modules.weather import get_weather_api
-            return get_weather_api()
+            return get_weather_api(msg)  # 메시지 전체를 전달
+
+        # 또는 더 구체적으로 처리하고 싶다면:
+        if "날씨" in msg:
+            from modules.weather import get_weather_api
+            return get_weather_api(msg)
+
+        if "포항 날씨" in msg:
+            from modules.weather import get_pohang_weather
+            return get_pohang_weather()
+
+        if "서울 날씨" in msg:
+            from modules.weather import get_seoul_weather
+            return get_seoul_weather()
+
+        if "부산 날씨" in msg:
+            from modules.weather import get_busan_weather
+            return get_busan_weather()
 
         if msg == "KHH":
             return "크하학 크하학"
