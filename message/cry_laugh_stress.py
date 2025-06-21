@@ -15,6 +15,10 @@ def check_all_patterns(msg):
     if "나가" in msg:
         return "죄송합니다"
 
+    sleep_result = check_sleep_mention(msg)
+    if sleep_result:
+        return sleep_result
+
     # 기본 감정 체크 (기존 로직) - 조건 완화
     basic_emotion = check_basic_emotions(msg)
     if basic_emotion:
@@ -182,13 +186,13 @@ def check_typos(msg):
     return None
 
 
-def check_time_sensitive(msg, current_hour):
-    """시간대별 반응"""
-    # 졸림 관련 키워드 확장
-    sleep_keywords = ["졸려", "잠", "자야지", "피곤", "졸리", "잠와", "잠온", "꿀잠"]
+def check_sleep_mention(msg):
+    """잠/졸림 관련 체크 강화"""
+    sleep_keywords = ["졸려", "졸리", "잠", "자야지", "피곤", "잠와", "잠온", "꿀잠"]
 
-    # 수면 키워드가 있을 때만 시간대별 반응
     if any(word in msg for word in sleep_keywords):
+        current_hour = datetime.datetime.now().hour
+
         if current_hour < 6:
             return "늦게까지 뭐해요"
         elif 6 <= current_hour < 10:
@@ -199,6 +203,11 @@ def check_time_sensitive(msg, current_hour):
         elif current_hour >= 22:
             return "늦게까지 고생이 많네요"
 
+    return None
+
+
+def check_time_sensitive(msg, current_hour):
+    """시간대별 반응"""
     # 기존 점심/공부 관련 로직
     if current_hour > 14 and "점심" in msg:
         return "점심시간 놓쳤네요"
