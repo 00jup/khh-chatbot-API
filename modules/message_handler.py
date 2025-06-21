@@ -70,14 +70,11 @@ class MessageHandler:
     def _handle_basic_messages(self, msg):
         """기본 메시지 처리 (하드코딩된 응답들)"""
 
-        weather_keywords = ["날씨", "기온", "온도", "비", "눈", "바람", "습도"]
+        weather_keywords = ["날씨", "기온", "온도", "바람", "습도"]
         if any(keyword in msg for keyword in weather_keywords):
             from modules.weather import get_weather_api
             return get_weather_api()
-        
-        # 크하학 관련
-        if msg == "크하학":
-            return "KHH KHH KHH KHH KHH KHH KHH KHH KHH KHH KHH KHH KHH"
+
         if msg == "KHH":
             return "크하학 크하학"
 
