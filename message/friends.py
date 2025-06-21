@@ -23,8 +23,8 @@ def check_friends_message(msg):
             "Sally mode 풀가동",
         ],
         "카린": [
-            "Pray for Karin",
-            "Karin for Pray",
+            "Pray for Karyn",
+            "Karyn for Pray",
             "카린 mode 풀가동",
         ],
         "에린": [
@@ -35,7 +35,6 @@ def check_friends_message(msg):
         "런도": [
             "Run Do Run Do Run Do",
             "아 배고프다 편의점 갈 사람",
-            "여러뿐 잠시 쉬었다 갈게요",
         ],
         "테더": [
             "Let me introduce myself, I'm Tether.",

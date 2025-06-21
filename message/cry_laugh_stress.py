@@ -11,10 +11,29 @@ def check_all_patterns(msg):
     """모든 패턴 체크 통합 함수"""
     current_hour = datetime.datetime.now().hour
 
-    # 기본 감정 체크 (기존 로직)
+    # 나가라는 말에 대한 반응 (최우선 처리)
+    if "나가" in msg and ("라" in msg or "세요" in msg):
+        return "죄송합니다"
+
+    # 기본 감정 체크 (기존 로직) - 조건 완화
     basic_emotion = check_basic_emotions(msg)
     if basic_emotion:
         return basic_emotion
+
+    # 음식 관련 체크 추가
+    food_result = check_food_mention(msg)
+    if food_result:
+        return food_result
+
+    # 잠/졸림 관련 체크 추가
+    sleep_result = check_sleep_mention(msg)
+    if sleep_result:
+        return sleep_result
+
+    # 공부 관련 체크 추가
+    study_result = check_study_mention(msg)
+    if study_result:
+        return study_result
 
     # 추가 감정 체크
     anger_result = check_anger(msg)
@@ -82,7 +101,7 @@ def check_basic_emotions(msg):
 def check_cry(msg):
     """울음 체크"""
     messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
-    if sum(msg.count(char) for char in "ㅠㅜ") >= 3:
+    if sum(msg.count(char) for char in "ㅠㅜ") >= 2:
         return random.choice(messages)
     return None
 
@@ -90,7 +109,7 @@ def check_cry(msg):
 def check_laugh(msg):
     """웃음 체크"""
     messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
-    if sum(msg.count(char) for char in "ㅋㄱㄲㄴㅌㅎ") >= 20:
+    if sum(msg.count(char) for char in "ㅋㄱㄲㄴㅌㅎ") >= 5:
         return random.choice(messages)
     return None
 
