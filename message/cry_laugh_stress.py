@@ -187,21 +187,24 @@ def check_time_sensitive(msg, current_hour):
     # 졸림 관련 키워드 확장
     sleep_keywords = ["졸려", "잠", "자야지", "피곤", "졸리", "잠와", "잠온", "꿀잠"]
 
-    if current_hour < 6 and any(word in msg for word in sleep_keywords):
-        return "늦게까지 뭐해요"
-    elif current_hour > 14:
-        return "점심은 먹었나요?"
-    elif current_hour < 10:
-        return "일찍 일어나셨네요"
-    elif 22 <= current_hour or current_hour < 6:
+    # 수면 키워드가 있을 때만 시간대별 반응
+    if any(word in msg for word in sleep_keywords):
+        if current_hour < 6:
+            return "늦게까지 뭐해요"
+        elif 6 <= current_hour < 10:
+            return "일찍 일어나셨네요"
+        elif 10 <= current_hour <= 21:
+            responses = ["자라;;", "졸리지 마세요", "커피 마셔요", "잠깐 쉬세요"]
+            return random.choice(responses)
+        elif current_hour >= 22:
+            return "늦게까지 고생이 많네요"
+
+    # 기존 점심/공부 관련 로직
+    if current_hour > 14 and "점심" in msg:
+        return "점심시간 놓쳤네요"
+    elif current_hour >= 22 or current_hour < 6:
         if any(word in msg for word in ["공부", "과제", "일"]):
             return "늦게까지 고생이 많네요"
-    else:
-        return "지금은 일할 시간이에요"
-
-    # 낮시간 졸림 반응 추가
-    if 10 <= current_hour <= 21 and any(word in msg for word in sleep_keywords):
-        return random.choice(["자라;;", "졸리지 마세요", "커피 마셔요", "잠깐 쉬세요"])
 
     return None
 
