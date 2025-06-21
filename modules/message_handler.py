@@ -70,6 +70,12 @@ class MessageHandler:
     def _handle_basic_messages(self, msg):
         """기본 메시지 처리 (하드코딩된 응답들)"""
 
+        # 🔥 도움말 기능 추가 (최우선 처리)
+        help_keywords = ["help", "Help",
+                         "HELP", "도움말", "도움", "사용법", "명령어", "기능"]
+        if any(keyword in msg.lower() for keyword in help_keywords):
+            return self._get_help_message()
+
         # 🔥 날씨 관련 처리 - 지역별 지원
         weather_keywords = ["날씨", "기온", "온도", "바람", "습도"]
         if any(keyword in msg for keyword in weather_keywords):
@@ -225,6 +231,34 @@ class MessageHandler:
             return get_postech_meal("저녁")
 
         return None
+
+    def _get_help_message(self):
+        """도움말 메시지 반환"""
+        help_text = """🤖 크하학 봇 사용법
+
+    📱 GitHub: https://github.com/khh-chatbot/khh-chatbot-api
+
+    🍱 학식 정보:
+    • 학식 / 중학 / 다학
+
+    🌤️ 날씨 정보:
+    • 날씨 / 포항 날씨 / 서울 날씨 / 부산 날씨
+
+    🧠 메모리 기능:
+    • !기억 내용 (방별 메모 저장)
+    • 뭐였지? (방별 메모 조회)
+    • !삭제 방별 / !삭제 개인
+
+    ⏰ 리마인드:
+    • !리마인드 내일 14:30 회의
+    • !리마인드 오늘 18:00 약속
+
+    🎭 특별 기능:
+    • 친구 이름 언급하면 개별 응답
+
+    더 궁금하면 GitHub에서 확인하세요!"""
+
+        return help_text
 
     def _handle_special_messages(self, msg, sender):
         """상태 관리가 필요한 특별한 메시지들"""
