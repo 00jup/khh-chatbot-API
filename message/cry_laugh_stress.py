@@ -112,7 +112,7 @@ def check_cry(msg):
 
 def check_laugh(msg):
     """웃음 체크"""
-    messages = ["뭘 웃어요;;", "안웃긴데;;", "이게 웃겨요?"]
+    messages = ["뭘 웃어요;;", "안 웃긴데;;", "이게 웃겨요?"]
     if sum(msg.count(char) for char in "ㅋㄱㄲㄴㅌㅎ") >= 5:
         return random.choice(messages)
     return None
