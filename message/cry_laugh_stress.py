@@ -209,9 +209,7 @@ def check_sleep_mention(msg):
 def check_time_sensitive(msg, current_hour):
     """시간대별 반응"""
     # 기존 점심/공부 관련 로직
-    if current_hour > 14 and "점심" in msg:
-        return "점심시간 놓쳤네요"
-    elif current_hour >= 22 or current_hour < 6:
+    if current_hour >= 22 or current_hour < 6:
         if any(word in msg for word in ["공부", "과제", "일"]):
             return "늦게까지 고생이 많네요"
 

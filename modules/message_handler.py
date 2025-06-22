@@ -234,8 +234,7 @@ class MessageHandler:
 
     def _get_help_message(self):
         """도움말 메시지 반환"""
-        help_text = """
-    🤖 크하학 봇 사용법
+        help_text = """    🤖 크하학 봇 사용법
 
     📱 GitHub: https://github.com/khh-chatbot/khh-chatbot-api
 

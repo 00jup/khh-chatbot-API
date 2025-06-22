@@ -140,7 +140,7 @@ class POSTECHMealService:
         elif meal_type == "저녁":
             menu_text = f"📍 포항공대 오늘({today_name})\n"
         else:
-            menu_text = f"📍 포항공대 오늘({today_name}) {meal_type}:"
+            menu_text = f"📍 포항공대 오늘({today_name})\n"
 
         if not filtered_menus:
             menu_text += "오늘 메뉴를 찾을 수 없다.\n"
@@ -167,7 +167,7 @@ class POSTECHMealService:
             # 영양 정보
             nutrition_info = self._format_nutrition_info(menu)
             if nutrition_info:
-                menu_text += f"{nutrition_info}"
+                menu_text += f"{nutrition_info}\n\n"
 
         return menu_text
 
