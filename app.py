@@ -49,6 +49,30 @@ def log_request_info():
     print(f"[{timestamp}] {log_message}")
 
 
+@app.route('/api/bot/silence', methods=['POST'])
+def bot_silence_control():
+    """조용 기능 제어"""
+    try:
+        data = request.get_json()
+        action = data.get('action')
+
+        if action == "silence":
+            from datetime import datetime, timedelta
+            message_handler.bot_state['isSilent'] = True
+            message_handler.bot_state['silentUntil'] = datetime.now(
+            ) + timedelta(minutes=10)
+            return jsonify({"success": True, "data": "10분 동안 조용히 한다"})
+        elif action == "unsilence":
+            message_handler.bot_state['isSilent'] = False
+            message_handler.bot_state['silentUntil'] = None
+            return jsonify({"success": True, "data": "조용 모드 해제됐다"})
+        else:
+            return jsonify({"success": False, "error": "잘못된 액션이다"})
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+
 @app.route('/')
 def home():
     client_ip = request.environ.get(

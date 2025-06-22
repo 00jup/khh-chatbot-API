@@ -165,9 +165,14 @@ class POSTECHMealService:
                 menu_text += "  • 메뉴 정보 없음\n"
 
             # 영양 정보
+            # 영양 정보
             nutrition_info = self._format_nutrition_info(menu)
             if nutrition_info:
-                menu_text += f"{nutrition_info}\n\n"
+                # 조식A 또는 조식B인 경우에만 \n\n 추가
+                if menu.get('type') in ['BREAKFAST_A', 'BREAKFAST_B']:
+                    menu_text += f"{nutrition_info}\n\n"
+                else:
+                    menu_text += f"{nutrition_info}\n"
 
         return menu_text
 

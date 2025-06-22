@@ -13,6 +13,8 @@ class MessageHandler:
             'ailaCount': {},
             'yoshiCount': {},
             'isActive': True,
+            'isSilent': False,
+            'silentUntil': None
         }
 
     def process_message(self, msg, sender, room):
@@ -32,6 +34,21 @@ class MessageHandler:
         if memory_response:
             return memory_response
 
+        # 조용 상태 체크 및 해제
+        if self.bot_state['isSilent']:
+            current_time = datetime.now()
+            if self.bot_state['silentUntil'] and current_time >= self.bot_state['silentUntil']:
+                self.bot_state['isSilent'] = False
+                self.bot_state['silentUntil'] = None
+            else:
+                return None  # 조용 중이면 응답 안함
+
+        # 조용하라는 명령어 체크 (최우선)
+        if "조용" in msg or "조용해" in msg or "조용히" in msg:
+            from datetime import datetime, timedelta
+            self.bot_state['isSilent'] = True
+            self.bot_state['silentUntil'] = datetime.now() + timedelta(minutes=10)
+            return "10분 동안 조용히 한다"
         # 4. 특별한 상태 관리가 필요한 메시지들 (아일라, 요시)
         special_response = self._handle_special_messages(msg, sender)
         if special_response:
