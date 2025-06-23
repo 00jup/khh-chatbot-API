@@ -104,7 +104,7 @@ def check_basic_emotions(msg):
 
 def check_cry(msg):
     """울음 체크"""
-    messages = ["뭘 울어요;;", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
+    messages = ["ㅠㅠㅠㅜㅜㅠ", "왜 우시는 거예요?", "ㅋㅋ얘 운다"]
     if sum(msg.count(char) for char in "ㅠㅜ") >= 2:
         return random.choice(messages)
     return None
@@ -112,7 +112,7 @@ def check_cry(msg):
 
 def check_laugh(msg):
     """웃음 체크"""
-    messages = ["뭘 웃어요;;", "안 웃긴데;;", "이게 웃겨요?"]
+    messages = ["뭘 웃어요;;", "ㅋㄱㅋㄱㅋㄱㅋㄱㅋㄱㅋㄱㅋㅋ", "이게 웃겨요?"]
     if sum(msg.count(char) for char in "ㅋㄱㄲㄴㅌㅎ") >= 5:
         return random.choice(messages)
     return None
@@ -201,7 +201,7 @@ def check_sleep_mention(msg):
             responses = ["자라;;", "졸리지 마세요", "커피 마셔요", "잠깐 쉬세요"]
             return random.choice(responses)
         elif current_hour >= 22:
-            return "늦게까지 고생이 많네요"
+            return "너무 힘들면, 자요"
 
     return None
 
