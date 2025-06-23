@@ -210,8 +210,9 @@ def check_time_sensitive(msg, current_hour):
     """시간대별 반응"""
     # 기존 점심/공부 관련 로직
     if current_hour >= 22 or current_hour < 6:
-        if any(word in msg for word in ["공부", "과제", "일"]):
-            return "늦게까지 고생이 많네요"
+        if any(word in msg for word in ["공부", "과제", "숙제", "발표", "프로젝트"]):
+            responses = ["늦게까지 고생이 많네요", "잠깐 쉬세요", f"이 시간에 {word}는 너무 힘들죠"]
+            return random.choice(responses)
 
     return None
 
