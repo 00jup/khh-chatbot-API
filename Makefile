@@ -43,7 +43,7 @@ disable:
 
 # 빠른 업데이트 (git pull + restart)
 update:
-	git pull origin main
+	git pull
 	make restart
 	@echo "✅ 업데이트 완료!"
 
