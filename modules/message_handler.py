@@ -20,41 +20,41 @@ class MessageHandler:
     def process_message(self, msg, sender, room):
         """메시지 처리 메인 함수"""
 
-        # 1. 관리자 명령어 먼저 체크
+        # 관리자 명령어 먼저 체크
         admin_response = check_admin_message(msg, sender, self.bot_state)
         if admin_response:
             return admin_response
 
-        # 2. 봇이 비활성화된 경우
+        # 봇이 비활성화된 경우
         if not self.bot_state['isActive']:
             return None
 
-        # 3. 메모리 기능 체크 (우선순위 높음)
+        
+
+        # 조용 상태 체크 및 해제
+        if self._is_silent():
+            # 침묵 해제 명령어만 처리
+            if "말해" in msg or "대답해" in msg or "말하라" in msg:
+                self.bot_state['silentUntil'] = None
+                return "다시 대답하겠다"
+            return None  # 침묵 중이면 아무 응답 안함
+
+        # 조용히 해 명령어 체크 (새로 추가)
+        if "조용히 해" in msg or "조용히해" in msg or "닥쳐" in msg:
+            return self._make_silent()
+        
+        # 메모리 기능 체크 (우선순위 높음)
         memory_response = message_memory(msg, room, sender)
         if memory_response:
             return memory_response
 
-        # 조용 상태 체크 및 해제
-        if self.bot_state['isSilent']:
-            current_time = datetime.now()
-            if self.bot_state['silentUntil'] and current_time >= self.bot_state['silentUntil']:
-                self.bot_state['isSilent'] = False
-                self.bot_state['silentUntil'] = None
-            else:
-                return None  # 조용 중이면 응답 안함
 
-        # 조용하라는 명령어 체크 (최우선)
-        if "조용" in msg or "조용해" in msg or "조용히" in msg:
-            from datetime import datetime, timedelta
-            self.bot_state['isSilent'] = True
-            self.bot_state['silentUntil'] = datetime.now() + timedelta(minutes=10)
-            return "10분 동안 조용히 한다"
-        # 4. 특별한 상태 관리가 필요한 메시지들 (아일라, 요시)
+        # 특별한 상태 관리가 필요한 메시지들 (아일라, 요시)
         special_response = self._handle_special_messages(msg, sender)
         if special_response:
             return special_response
 
-        # 5. 각 message 모듈에서 순차적으로 체크
+        # 각 message 모듈에서 순차적으로 체크
         # 우선순위: 친구 > 졸업 > 밈 > 감정
 
         # 친구 이름 체크
