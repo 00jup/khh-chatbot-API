@@ -5,6 +5,7 @@ from message.graduate import check_graduate_message
 from message.admin import check_admin_message
 from message.cry_laugh_stress import check_cry_laugh_stress_message
 from message.meme import check_meme_message
+from datetime import datetime, timedelta  # 이게 파일 맨 위에 있나?
 
 
 class MessageHandler:
@@ -80,6 +81,28 @@ class MessageHandler:
             return basic_response
 
         return None  # 처리할 수 없는 메시지
+
+    def _is_silent(self):
+        """조용 상태 확인"""
+        if not self.bot_state['isSilent']:
+            return False
+
+        if self.bot_state['silentUntil'] is None:
+            return False
+
+        # 조용 시간이 지났는지 확인
+        if datetime.now() > self.bot_state['silentUntil']:
+            self.bot_state['isSilent'] = False
+            self.bot_state['silentUntil'] = None
+            return False
+
+        return True
+
+    def _make_silent(self):
+        """조용 모드 설정"""
+        self.bot_state['isSilent'] = True
+        self.bot_state['silentUntil'] = datetime.now() + timedelta(minutes=10)
+        return "10분 동안 조용히 한다"
 
     def _handle_basic_messages(self, msg):
         """기본 메시지 처리 (하드코딩된 응답들)"""
