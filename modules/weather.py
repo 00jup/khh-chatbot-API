@@ -122,7 +122,7 @@ def get_weather_fallback(base_date, current_hour, location="포항"):
     url = f"https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?serviceKey={quote(service_key)}&pageNo=1&numOfRows=1000&dataType=XML&base_date={base_date}&base_time={base_time}&nx={nx}&ny={ny}"
 
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=5)
         response.raise_for_status()
 
         weather_info = parse_weather_xml_sync(response.text)

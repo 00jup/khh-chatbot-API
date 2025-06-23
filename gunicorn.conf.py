@@ -1,7 +1,7 @@
 # Gunicorn 설정
 bind = "127.0.0.1:8080"
-workers = 2
-worker_class = "sync"
+workers = 4
+worker_class = "gevent"
 worker_connections = 1000
 timeout = 30
 keepalive = 2

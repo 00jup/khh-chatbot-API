@@ -78,7 +78,7 @@ class POSTECHMealService:
         headers = {"Content-Type": "application/json"}
 
         try:
-            response = requests.get(api_url, headers=headers, timeout=10)
+            response = requests.get(api_url, headers=headers, timeout=5)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
