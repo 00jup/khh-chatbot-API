@@ -7,6 +7,8 @@ from message.cry_laugh_stress import check_cry_laugh_stress_message
 from message.meme import check_meme_message
 from datetime import , timedelta  # 이게 파일 맨 위에 있나?
 
+from datetime import datetime, timedelta
+
 
 class MessageHandler:
     def __init__(self):
@@ -30,8 +32,6 @@ class MessageHandler:
         if not self.bot_state['isActive']:
             return None
 
-        
-
         # 조용 상태 체크 및 해제
         if self._is_silent():
             # 침묵 해제 명령어만 처리
@@ -43,12 +43,11 @@ class MessageHandler:
         # 조용히 해 명령어 체크 (새로 추가)
         if "조용히 해" in msg or "조용히해" in msg or "닥쳐" in msg:
             return self._make_silent()
-        
+
         # 메모리 기능 체크 (우선순위 높음)
         memory_response = message_memory(msg, room, sender)
         if memory_response:
             return memory_response
-
 
         # 특별한 상태 관리가 필요한 메시지들 (아일라, 요시)
         special_response = self._handle_special_messages(msg, sender)
